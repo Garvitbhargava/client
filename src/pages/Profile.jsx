@@ -12,12 +12,9 @@ export default function Profile() {
   const fileRef = useRef(null);
   const { currentUser } = useSelector((state) => state?.user);
   const [file, setFile] = useState(undefined);
-  const [filePerc, setFilePerc] = useState(0);
+  const [filePercentage, setFilePercentage] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
-  console.log(formData)
-  console.log(file)
-  console.log(fileUploadError)
 
 
   useEffect(() => {
@@ -34,9 +31,9 @@ export default function Profile() {
 
     uploadTask.on("state_changed", (snapshot) => {
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      setFilePerc(Math.round(progress));
+      setFilePercentage(Math.round(progress));
     },
-      (error) => {
+      () => {
         setFileUploadError(true);
       },
       () => {
@@ -62,9 +59,20 @@ export default function Profile() {
         <img
           onClick={() => fileRef.current.click()}
           className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2  "
-          src={currentUser.avatar}
+          src={formData.avatar || currentUser.avatar}
           alt="profile"
         />
+
+        <p className="text-sm self-center">
+          {fileUploadError ? (<span className="text-red-700">Error Image upload(image must ne less then 2mb)</span>) : 
+            filePercentage > 0 && filePercentage < 100 ? (
+              <span className="text-slate-700" >{`Uploading ${filePercentage}`}</span>) :
+              filePercentage === 100 ? ( 
+                <span className="text-green-700"> Image Successfully uploaded </span>) : 
+                ""
+            
+             }
+        </p>
 
         <input
           type="text"
