@@ -7,7 +7,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { app } from "../firebase.js";
-import { deleteFailure, deleteUserStart, deleteUserSuccess, signOutUserFailure, signOutUserStart, signOutUserSuccess, updateUserFailure, updateUserStart, updateUserSuccess } from "../redux/user/userSlice.js";
+import { deleteFailure, deleteUserStart, deleteUserSuccess, signOutUserStart, signOutUserSuccess, updateUserFailure, updateUserStart, updateUserSuccess } from "../redux/user/userSlice.js";
 import { useDispatch } from "react-redux";
 
 export default function Profile() {
