@@ -44,6 +44,7 @@ export default function CreateListing() {
       setFormData(data);
     };
     fetchListing();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const storeImage = async (file) => {
@@ -70,7 +71,7 @@ export default function CreateListing() {
       );
     });
   };
-  const handleImageSubmit = (e) => {
+  const handleImageSubmit = () => {
     if (files?.length > 0 && files?.length + formData.imageUrls.length < 7) {
       setUploading(true);
       setImageUploadError(false);
@@ -88,7 +89,7 @@ export default function CreateListing() {
           setImageUploadError(false);
           setUploading(false);
         })
-        .catch((err) => {
+        .catch(() => {
           setImageUploadError("Image upload failed (2mb max per image");
           setUploading(false);
         });
@@ -149,7 +150,7 @@ export default function CreateListing() {
         return setError("Discount price must be lower than regular price");
       setLoading(true);
       setError(false);
-      const res = await fetch("/api/listing/create", {
+      const res = await fetch(`/api/listing/update/${params.listingId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -353,7 +354,7 @@ export default function CreateListing() {
             {imageUploadError && imageUploadError}
           </p>
           {formData.imageUrls.length > 0 &&
-            formData.imageUrls.map((url, index, key) => (
+            formData.imageUrls.map((url, index) => (
               <div
                 key={url}
                 className="flex justify-between p-3 border items-center"
